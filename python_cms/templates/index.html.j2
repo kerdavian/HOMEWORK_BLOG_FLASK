@@ -19,7 +19,11 @@
     <div class="column col-6 col-md-12">
       <div class="card article-card">
         <div class="card-image">
-          <img src="/files/{{post.teaser_image}}" class="img-responsive article-image" alt="">
+          {% if post.teaser_image != "" %}
+            <img src="/files/{{post.teaser_image}}" class="img-responsive article-image" alt="">
+          {% else %}
+            <img src="{{ url_for('static', filename='default.jpg') }}" class="img-responsive article-image" alt="">
+          {% endif %}
         </div>
         <div class="card-header">
           <div class="card-title h5">{{ post.title }}</div>

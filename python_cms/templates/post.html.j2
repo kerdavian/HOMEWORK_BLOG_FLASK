@@ -11,7 +11,11 @@
     <h1>Post not found</h1>
   {% else %}
   <h1>{{ post.title }}</h1>
+    {% if post.teaser_image != "" %}
       <img src="/files/{{post.teaser_image}}" class="img-responsive article-image" alt="">
+    {% else %}
+      <img src="{{ url_for('static', filename='default.jpg') }}" class="img-responsive article-image" alt="">
+    {% endif %}
     {{ post.body|safe }}
   {% endif %}
 {% endblock %}
