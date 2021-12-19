@@ -1,0 +1,21 @@
+{% extends 'base.html.j2' %}
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+{% if post.author_id == current_user.id %}
+  <a href="/post/delete/{{ post.id }}" class="btn delete bg-error text-secondary mx-1 float-right tooltip tooltip-bottom" data-tooltip="permanently delete this post">Delete</a>
+    
+ 
+{% endif %}
+  {% if post.id is not defined %}
+    <h1>Post not found</h1>
+  {% else %}
+  <h1>{{ post.title }}</h1>
+      <img src="/files/{{post.teaser_image}}" class="img-responsive article-image" alt="">
+    {{ post.body|safe }}
+  {% endif %}
+{% endblock %}
+
+{% block bodysource %}
+ <script src="{{url_for('static', filename="remove_toast.js")}}"></script>
+{% endblock %}
