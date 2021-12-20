@@ -41,6 +41,7 @@ def create_post():
     filename = ""
     if file:
       filename = secure_filename(file.filename)
+      # filename = request.form.get('original_teaser_image')
       file.save(os.path.join(python_cms.ROOT_PATH, 'files_upload', filename))
     post = PostModel(title, body, current_user.get_id(), filename)
     post.save()
@@ -85,3 +86,42 @@ def delete_post(post_id):
   post.delete()
   flash(f'Post with title: {post.title} was deleted')
   return redirect(url_for('pages.index'))
+
+
+@pages_blueprint.route('/post/edit/<string:post_id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+  post = PostModel.get(post_id)
+  if post.author_id != current_user.get_id():
+    return "you are not authorized to edit this content", 403
+  form = PostForm()
+  if request.method == 'POST' and form.validate_on_submit():
+    unescaped_body = html.unescape(request.form.get('body'))
+    clean_body = bleach.clean(unescaped_body,
+                              tags=bleach.sanitizer.ALLOWED_TAGS +
+                              ['div', 'br', 'p', 'h1', 'h2', 'img', 'h3'],
+                              attributes=['src', 'alt', 'style'])
+
+    body = clean_body
+    title = request.form.get('title')
+    file = request.files['teaser_image']
+    filename = ""
+    if file:
+      # filename = secure_filename(file.filename)
+      filename = request.form.get('original_teaser_image')
+      file.save(os.path.join(python_cms.ROOT_PATH, 'files_upload', filename))
+    post.title = title
+    post.body = body
+    post.author_id = current_user.get_id()
+    post.teaser_image = filename
+    post.save()
+    flash(f'Post with title: {title} is created')
+    return redirect(url_for('pages.index'))
+
+  form.title.data = post.title
+  form.teaser_image.data = post.teaser_image
+  form.body.data = post.body
+  return render_template('edit_post.html.j2',
+                         form=form,
+                         post=post,
+                         post_id=post_id)

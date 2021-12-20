@@ -65,6 +65,10 @@ main {
   min-height: 400px;
 }
 
-#createPost {
+#createOrEditPost {
   margin-top: 20px;
+}
+
+.hidden {
+  display: none;
 }
