@@ -29,3 +29,4 @@ class PostForm(FlaskForm):
       ])
   submit = SubmitField(label=('Create'))
   promoted = BooleanField('Promoted')
+  category = RadioField()

@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename, redirect
 import os
 from python_cms.models.post import PostModel
 from python_cms.forms.post_form import PostForm
+from python_cms.models.category import CategoryModel
 import python_cms
 import html
 from flask_ckeditor import upload_success, upload_fail
