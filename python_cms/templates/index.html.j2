@@ -38,7 +38,7 @@
 </div>  
 
 <div class="columns">
-  {% for post in posts %}
+  {% for post in posts|selectattr("promoted", "equalto", False) %}
     <div class="column col-6 col-md-12">
       <div class="card article-card">
         <div class="card-image">

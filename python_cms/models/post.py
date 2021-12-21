@@ -9,8 +9,10 @@ class PostModel(BaseModel):
   body = db.Column(db.String(8000), nullable=False)
   author_id = db.Column(db.String(), db.ForeignKey('users.id'))
   promoted = db.Column(db.Boolean(), nullable=False)
+  category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
   # one post can have only one author
   author = db.relationship('UserModel', back_populates='posts')
+  category = db.relationship('CategoryModel', back_populates='posts')
 
   def __init__(self, title, body, user_id, teaser_image, promoted):
     self.title = title
