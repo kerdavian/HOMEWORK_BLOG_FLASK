@@ -28,3 +28,4 @@ class PostForm(FlaskForm):
                  "Body length must be between %(min)d and %(max)d characters")
       ])
   submit = SubmitField(label=('Create'))
+  promoted = BooleanField('Promoted')

@@ -72,3 +72,7 @@ main {
 .hidden {
   display: none;
 }
+
+.promoted {
+  border: rgb(120, 58, 148) solid 5px;
+}

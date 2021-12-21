@@ -14,6 +14,29 @@
    </div>
   {% endfor %}
 
+
+<div class="columns">
+  {% for post in posts|selectattr("promoted", "equalto", True) %}
+    <div class="column col-6 col-md-12">
+      <div class="card article-card promoted ">
+        <div class="card-image">
+          {% if post.teaser_image != "" %}
+            <img src="/files/{{post.teaser_image}}" class="img-responsive article-image" alt="">
+          {% else %}
+            <img src="{{ url_for('static', filename='default.jpg') }}" class="img-responsive article-image" alt="">
+          {% endif %}
+        </div>
+        <div class="card-header">
+          <div class="card-title h5">{{ post.title }}</div>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary" href="/post/{{ post.id }}">Read More</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>  
+
 <div class="columns">
   {% for post in posts %}
     <div class="column col-6 col-md-12">

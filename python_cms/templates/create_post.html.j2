@@ -36,7 +36,15 @@
 
   <label for="body" class="form-label"> {{ form.body.label }}</label>
   {{ form.body(class="form-input", placeholder="your article goes here", id='body')}}
+
   {{ form.submit(class="btn btn-primary input-group-btn float-right", id="createOrEditPost")}}
+
+  <div class="form-group">
+  <label class="form-switch">
+    <input type="checkbox" name="promoted">
+    <i class="form-icon"></i> Promoted on front page
+  </label>
+</div>
 
 </form>
  {{ ckeditor.config(name='body') }}

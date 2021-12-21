@@ -47,6 +47,18 @@
   {{ form.body(class="form-input", placeholder="your article goes here", id='body')}}
 
   <input type="submit" value="Save" class="btn btn-primary input-group-btn float-right", id="createOrEditPost">
+
+  <div class="form-group">
+  <label class="form-switch">
+  {% if post.promoted == False %}
+    <input type="checkbox" name="promoted">
+  {% else %}
+    <input type="checkbox" checked="True" name="promoted">
+  {% endif %}
+    <i class="form-icon"></i> Promoted on front page
+  </label>
+</div>
+  
 </form>
  {{ ckeditor.config(name='body') }}
 
