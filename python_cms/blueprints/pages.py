@@ -30,6 +30,7 @@ def about():
 @login_required
 def create_post():
   form = PostForm()
+  form.category.choices = [(1, 'Sports'), (2, 'Travel'), (3, 'Music'), (4, 'Food')]
   if request.method == 'POST' and form.validate_on_submit():
     unescaped_body = html.unescape(request.form.get('body'))
     clean_body = bleach.clean(unescaped_body,
@@ -45,7 +46,10 @@ def create_post():
       # filename = request.form.get('original_teaser_image')
       file.save(os.path.join(python_cms.ROOT_PATH, 'files_upload', filename))
     promoted = request.form.get('promoted')
-    post = PostModel(title, body, current_user.get_id(), filename, bool(promoted))
+    category_id = request.form.get('category')
+    category = CategoryModel.get(category_id)
+    # print("-----------------", category.name)
+    post = PostModel(title, body, current_user.get_id(), filename, bool(promoted), category_id, category.name)
     post.save()
     flash(f'Post with title: {title} is created')
     return redirect(url_for('pages.create_post'))
@@ -97,7 +101,14 @@ def edit_post(post_id):
   if post.author_id != current_user.get_id():
     return "you are not authorized to edit this content", 403
   form = PostForm()
+  form.category.choices = [(1, 'Sports'), (2, 'Travel'), (3, 'Music'), (4, 'Food')]
+  
+  
   if request.method == 'POST' and form.validate_on_submit():
+    category_id = request.form.get('category')
+    category = CategoryModel.get(category_id)
+    post.category_id = category_id
+    post.category_name = category.name
     unescaped_body = html.unescape(request.form.get('body'))
     clean_body = bleach.clean(unescaped_body,
                               tags=bleach.sanitizer.ALLOWED_TAGS +
@@ -122,6 +133,9 @@ def edit_post(post_id):
     flash(f'Post with title: {title} is created')
     return redirect(url_for('pages.index'))
 
+  
+  form.category.default = post.category_id
+  form.process()
   form.title.data = post.title
   form.teaser_image.data = post.teaser_image
   form.body.data = post.body

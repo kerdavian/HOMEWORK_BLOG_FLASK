@@ -76,3 +76,31 @@ main {
 .promoted {
   border: rgb(120, 58, 148) solid 5px;
 }
+
+.category {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  width: 230px;
+}
+
+.card-category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  font-size: 16 px;
+  background-color: lightgray;
+  width: 65px;
+  border-radius: 50%;
+
+  /* color: rgb(120, 58, 148); */
+  font-weight: bold;
+}
+
+/* .card-cat-name {
+  display: flex;
+  align-items: center;
+} */

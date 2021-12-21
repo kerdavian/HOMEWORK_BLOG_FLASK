@@ -34,17 +34,29 @@
   <label for="teaser_image"> {{ form.teaser_image.label }}</label>
   {{ form.teaser_image(class="form-input")}}
 
+  <label class="form-label">{{ form.category.label }}</label>
+  <div class="form-input category">
+    {% for subfield in form.category %}
+      <label class="form-radio form-inline">
+        {{ subfield }}
+        <i class="form-icon"></i> {{ subfield.label.text }}
+      </label>
+    {% endfor %}
+  </div>
+
   <label for="body" class="form-label"> {{ form.body.label }}</label>
   {{ form.body(class="form-input", placeholder="your article goes here", id='body')}}
 
-  {{ form.submit(class="btn btn-primary input-group-btn float-right", id="createOrEditPost")}}
+ {{ form.submit(class="btn btn-primary input-group-btn float-right", id="createOrEditPost")}}
 
   <div class="form-group">
-  <label class="form-switch">
-    <input type="checkbox" name="promoted">
-    <i class="form-icon"></i> Promoted on front page
-  </label>
-</div>
+    <label class="form-switch switch">
+      <input type="checkbox" name="promoted">
+      <i class="form-icon"></i> Promoted on front page
+    </label>
+  </div>
+
+ 
 
 </form>
  {{ ckeditor.config(name='body') }}

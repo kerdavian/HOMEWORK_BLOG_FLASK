@@ -43,13 +43,30 @@
     {{ form.teaser_image(class="form-input")}}
   {% endif %} 
 
+  <label class="form-label">{{ form.category.label }}</label>
+  <div class="form-input category">
+    {% for subfield in form.category %}
+      {% if subfield.label.text == post.category_name %}
+        <label class="form-radio form-inline">
+          {{ subfield }}
+          <i class="form-icon"></i> {{ subfield.label.text }}
+        </label>
+      {% else %}
+          <label class="form-radio form-inline" checked="True">
+          {{ subfield }}
+          <i class="form-icon"></i> {{ subfield.label.text }}
+        </label>
+      {% endif %}
+    {% endfor %}
+  </div>
+
   <label for="body" class="form-label"> {{ form.body.label }}</label>
   {{ form.body(class="form-input", placeholder="your article goes here", id='body')}}
 
   <input type="submit" value="Save" class="btn btn-primary input-group-btn float-right", id="createOrEditPost">
 
   <div class="form-group">
-  <label class="form-switch">
+  <label class="form-switch switch">
   {% if post.promoted == False %}
     <input type="checkbox" name="promoted">
   {% else %}
